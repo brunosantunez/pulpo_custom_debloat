@@ -45,9 +45,10 @@ Ejecuta:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\Validate.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\ConsentUi.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\WorkerIntegration.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\RegistryIntegration.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\SmokeUi.ps1
 ```
 
-Estas pruebas validan carga de modulos, comunicacion concurrente entre procesos, preparacion de scripts limitada a la sesion, interfaz y errores del worker. No aplican perfiles ni prueban cambios reales del sistema. La aplicacion completa y su reversion deben verificarse en una VM con respaldo antes de usarlas en equipos de clientes.
+Estas pruebas validan carga de modulos, comunicacion concurrente entre procesos, preparacion de scripts limitada a la sesion, escritura y restauracion sobre una clave temporal aislada de HKCU, interfaz y errores del worker. No aplican perfiles ni dejan modificaciones permanentes. La aplicacion completa y su reversion deben verificarse en una VM con respaldo antes de usarlas en equipos de clientes.
 
 El proyecto toma como referencia los enfoques publicos de [WinUtil](https://github.com/ChrisTitusTech/winutil), [Win11Debloat](https://github.com/Raphire/Win11Debloat) y [FPSBoostPro](https://github.com/itechfever/FPSBoostPro). La implementacion de este repositorio es independiente y mantiene sus propias listas de seguridad.

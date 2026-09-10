@@ -25,6 +25,8 @@ La aplicacion solicita elevacion normal de administrador y usa Windows PowerShel
 
 Los errores del proceso permanecen en `Restaurar y registro`. Las solicitudes, resultados y archivos `stderr.log` quedan en `%ProgramData%\PulpoCustomDebloat\Requests`; los errores de arranque se guardan en `%LOCALAPPDATA%\PulpoCustomDebloat\Logs`.
 
+El registro se actualiza en vivo y muestra el identificador, patron, paquete, ruta o servicio de cada operacion. Una vez creado el punto de restauracion y guardado el inventario, un elemento incompatible se omite y el resto continua; la sesion termina como `CompletedWithWarnings`. El mensaje `Paquete no instalado; no requiere cambios` es informativo y significa que esa aplicacion ya no estaba presente. Los fallos de preparacion o del punto de restauracion siguen deteniendo el proceso antes de aplicar ajustes.
+
 ## Perfiles
 
 - `Basica segura`: privacidad, sugerencias, busqueda web, notificaciones, acceso remoto, dispositivos moviles, drivers por Windows Update, Game Bar, plan de energia y limpieza. Conserva componentes con impacto funcional alto.
@@ -46,6 +48,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\Validate.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\ConsentUi.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\WorkerIntegration.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\RegistryIntegration.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\PackageContinuation.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\SmokeUi.ps1
 ```
 

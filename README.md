@@ -23,7 +23,7 @@ Antes de cada aplicacion se crea obligatoriamente un punto de restauracion llama
 
 La aplicacion solicita elevacion normal de administrador y usa Windows PowerShell 5.1 nativo en modo STA. Antes de abrir la interfaz pregunta si puede preparar los scripts para el proceso actual; el boton `Herramientas > Preparar scripts` permite repetir esa preparacion. No desactiva UAC, Microsoft Defender ni cambia la politica de ejecucion permanente. Las directivas de grupo restrictivas se informan como error y no se alteran.
 
-Los errores del proceso permanecen en `Restaurar y registro`. Las solicitudes, resultados y archivos `stderr.log` quedan en `%ProgramData%\PulpoCustomDebloat\Requests`; los errores de arranque se guardan en `%LOCALAPPDATA%\PulpoCustomDebloat\Logs`.
+Los errores del proceso permanecen en `Restaurar y registro`. La pestana `Depuracion` reune cada cambio no efectuado con su instruccion, comando y motivo, incluidos paquetes ausentes, advertencias y errores. El informe se puede copiar desde la interfaz y tambien queda guardado como `debug-report.txt` dentro del respaldo de la sesion; no se transmite por Internet automaticamente. Las solicitudes, resultados y archivos `stderr.log` quedan en `%ProgramData%\PulpoCustomDebloat\Requests`; los errores de arranque se guardan en `%LOCALAPPDATA%\PulpoCustomDebloat\Logs`.
 
 El registro se actualiza en vivo y muestra el identificador, patron, paquete, ruta o servicio de cada operacion. Una vez creado el punto de restauracion y guardado el inventario, un elemento incompatible se omite y el resto continua; la sesion termina como `CompletedWithWarnings`. El mensaje `Paquete no instalado; no requiere cambios` es informativo y significa que esa aplicacion ya no estaba presente. Los fallos de preparacion o del punto de restauracion siguen deteniendo el proceso antes de aplicar ajustes.
 
@@ -37,6 +37,8 @@ El registro se actualiza en vivo y muestra el identificador, patron, paquete, ru
 
 El asistente de concentracion no se modifica escribiendo datos binarios internos de `CloudStore`: ese formato cambia entre versiones y no ofrece una politica estable comun a Windows 10 y 11. El perfil ya desactiva las notificaciones globales solicitadas.
 
+En Windows 11, los tres perfiles habilitan el menu contextual completo de Windows 10. El cambio es por usuario, requiere reiniciar el Explorador o la sesion y la restauracion interna devuelve el estado anterior.
+
 La reversion interna restaura valores de registro, servicios y el plan de energia desde la ultima sesion. No recupera aplicaciones eliminadas ni temporales borrados. El boton `Abrir Restaurar sistema` ofrece una recuperacion adicional del sistema, pero no sustituye un respaldo de archivos ni garantiza reinstalar todos los paquetes.
 
 ## Validacion
@@ -49,9 +51,10 @@ powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\ConsentUi.p
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\WorkerIntegration.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\RegistryIntegration.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\PackageContinuation.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\DebugReport.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\SmokeUi.ps1
 ```
 
-Estas pruebas validan carga de modulos, comunicacion concurrente entre procesos, preparacion de scripts limitada a la sesion, escritura y restauracion sobre una clave temporal aislada de HKCU, interfaz y errores del worker. No aplican perfiles ni dejan modificaciones permanentes. La aplicacion completa y su reversion deben verificarse en una VM con respaldo antes de usarlas en equipos de clientes.
+Estas pruebas validan carga de modulos, comunicacion concurrente entre procesos, preparacion de scripts limitada a la sesion, escritura y restauracion sobre una clave temporal aislada de HKCU, informe de depuracion, interfaz y errores del worker. No aplican perfiles ni dejan modificaciones permanentes. La aplicacion completa y su reversion deben verificarse en una VM con respaldo antes de usarlas en equipos de clientes.
 
 El proyecto toma como referencia los enfoques publicos de [WinUtil](https://github.com/ChrisTitusTech/winutil), [Win11Debloat](https://github.com/Raphire/Win11Debloat) y [FPSBoostPro](https://github.com/itechfever/FPSBoostPro). La implementacion de este repositorio es independiente y mantiene sus propias listas de seguridad.

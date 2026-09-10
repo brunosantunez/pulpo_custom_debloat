@@ -12,6 +12,14 @@ irm https://raw.githubusercontent.com/brunosantunez/pulpo_custom_debloat/main/In
 
 El instalador descarga la rama `main` desde GitHub, valida los archivos principales y abre la interfaz. No requiere alojamiento adicional.
 
+Para habilitar solamente el menu contextual clasico de Windows 11 sin ejecutar el debloat completo:
+
+```powershell
+irm https://raw.githubusercontent.com/brunosantunez/pulpo_custom_debloat/main/Enable-ClassicContextMenu.ps1 | iex
+```
+
+Este comando modifica unicamente la preferencia del menu para el usuario actual y reinicia el Explorador de Windows.
+
 ## Uso
 
 1. Ejecuta `Run.cmd`.
@@ -19,7 +27,7 @@ El instalador descarga la rama `main` desde GitHub, valida los archivos principa
 3. Elige `Basica segura`, `Taller completo` o selecciona acciones manualmente.
 4. Revisa la previsualizacion y pulsa `Aplicar seleccion`.
 
-Antes de cada aplicacion se crea obligatoriamente un punto de restauracion llamado `Revertir cambios - Pulpo Custom Debloat`. Si Windows no permite crearlo, el proceso se detiene sin aplicar ajustes.
+Antes de cada aplicacion se crea obligatoriamente un punto de restauracion llamado `Revertir cambios - Pulpo Custom Debloat`. La creacion tiene un limite de 120 segundos; si Windows no la completa, el proceso se detiene sin aplicar ajustes y la interfaz vuelve a responder.
 
 La aplicacion solicita elevacion normal de administrador y usa Windows PowerShell 5.1 nativo en modo STA. Antes de abrir la interfaz pregunta si puede preparar los scripts para el proceso actual; el boton `Herramientas > Preparar scripts` permite repetir esa preparacion. No desactiva UAC, Microsoft Defender ni cambia la politica de ejecucion permanente. Las directivas de grupo restrictivas se informan como error y no se alteran.
 
@@ -52,6 +60,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\WorkerIntegratio
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\RegistryIntegration.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\PackageContinuation.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\DebugReport.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\NativeTimeout.ps1
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File .\tests\SmokeUi.ps1
 ```
 

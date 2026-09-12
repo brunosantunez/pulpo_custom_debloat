@@ -12,14 +12,6 @@ irm https://raw.githubusercontent.com/brunosantunez/pulpo_custom_debloat/main/In
 
 El instalador descarga la rama `main` desde GitHub, valida los archivos principales y abre la interfaz. No requiere alojamiento adicional.
 
-Para habilitar solamente el menu contextual clasico de Windows 11 sin ejecutar el debloat completo:
-
-```powershell
-irm https://raw.githubusercontent.com/brunosantunez/pulpo_custom_debloat/main/Enable-ClassicContextMenu.ps1 | iex
-```
-
-Este comando modifica unicamente la preferencia del menu para el usuario actual y reinicia el Explorador de Windows.
-
 ## Uso
 
 1. Ejecuta `Run.cmd`.
